@@ -15,7 +15,7 @@ if ( participantName === '') {
 }
 //je créé un element li qui contient mon prenom
 const participantElt= `
-<li>${participantName}</li>
+<li class="participant">${participantName}</li>
 `
 ;
 //je récupère l' element ul qui contient la list des participants
@@ -28,10 +28,40 @@ nameinputElt.value = "";
 const addNameFormeElt = document.getElementById("addNameForm");
 addNameFormeElt.addEventListener("submit" , addParticipant) ;
 
+const participants = ["Julien", "Nicolas", "Paul" ,"Tom" , "Marie" , "Thomas", "Vincent","Agnes" ]
+const numberGroups = document.getElementById('groupnumber').value;
 
-const participants = ["Julien", "Nicolas", "Paul" ,"Tom" , "Marie" , "Thomas" ]
-const numberGroups = 3;
+const generateForm = document.getElementById('generateGroup')
+generateForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const numberGroups = parseInt ( document.getElementById('groupnumber').value)
+    const participants = [];
+    const participantsElt = document.querySelectorAll('.participant');
+    participantsElt.forEach(element => participants.push(element.textContent))
+    if ( numberGroups > participants.length) {
+        alert ( "Mettre un nombre de participants superieur ou egal aux nombre de groupes")
+    }
+    if ( participants.length == 0 ) {
+        alert ( "Pas de participants")
+    }
+    if ( numberGroups <= 0 ) {
+        alert ("Nombre de groupes negatif ou nul")
+    }
+    if ( Number.isNaN(numberGroups)) {
+        alert ("Le nombre de groupe doit etre un nombre")
+    }
+    else {
+    GenerateGroups(participants , numberGroups)
+}
+})
+// Recuperer le nombre de groupes.
 
+/**
+* @param {array} participants
+* @param {int} numberGroups
+* 
+*/
+function GenerateGroups (participants , numberGroups) {
 
 //Apllique une fonction sur chaque elements du tableau 
 const sorted = participants
@@ -42,8 +72,8 @@ const sorted = participants
     console.log(sorted)
 //Je veux trier un tableau de nom aleatoirement 
 
-/*const groupsArr = [] ;
-for ( let i = 0 ; i< numberGroups ; i++) {
+const groupsArr = [] ;
+/*for ( let i = 0 ; i< numberGroups ; i++) {
     groupsArr.push([]);
 }
 var groups = groupsArrIndex = 0;
@@ -53,7 +83,7 @@ while (sorted.length > 0) {
 console.log(groupsArr ) ; 
 */
 
-const groupsArr = [];
+
 for(let i = 0; i < numberGroups; i++){
     groupsArr.push([]);
 }
@@ -68,5 +98,24 @@ while(sorted.length > 0){
         groupsArrIndex = 0;
     }
 }
-console.log(groupsArr)
-// Je veux générer des groupes de nom
+const groupsListElt = document.getElementById("groupList");
+for ( let groupIndex = 0; groupIndex < groupsArr.length ; groupIndex++){
+    let groupElt = `
+    <div class="card bg-light mb-3" style="max-width: 20rem;">
+       <div class="card-header">Groupe ${groupIndex + 1}</div>
+       <div class="card-body">
+       <ul> `
+       ;
+    for (var participantIndex = 0 ; participantIndex < groupsArr[groupIndex].length; participantIndex++  ) {
+        groupElt += `<li>${groupsArr[groupIndex] [participantIndex] }</li>` }
+       groupElt += `
+                    </ul>
+                </div>
+            </div>`            
+    ;
+    groupsListElt.innerHTML += groupElt;
+}
+}
+
+
+
