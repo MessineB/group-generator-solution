@@ -6,7 +6,13 @@ function addParticipant ()
     const nameinputElt = document.getElementById('nameInput');
 
 //je créé mon prénom
-const participantName= nameinputElt.value;
+const participantName= nameinputElt.value.trim();
+
+//Test si c'est vide 
+if ( participantName === '') {
+    alert ("QUOI ?!?")
+    return
+}
 //je créé un element li qui contient mon prenom
 const participantElt= `
 <li>${participantName}</li>
