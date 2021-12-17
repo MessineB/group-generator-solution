@@ -66,6 +66,7 @@ generateForm.addEventListener('submit', function(event) {
     participantsElt.forEach(element => participants.push(element.textContent))
     if ( numberGroups > participants.length) {
         alert ( "Mettre un nombre de participants superieur ou egal aux nombre de groupes")
+        return
     }
     if ( participants.length == 0 ) {
         alert ( "Pas de participants")
