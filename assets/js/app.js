@@ -1,3 +1,29 @@
+function triB (tab) { 
+    let A;
+    let B;
+    let TEMPO;
+
+    if ( Array.isArray(tab) === true ) { // On verifie que l'on rentre dans la fonction un tableau 
+        if (tab.length == 0 || tab.length == 1 )  // On teste la taille du tableau si il est nul on fait rien, si on a la taille de 1 alors on a pas besoin de trier 
+        {
+            return;
+        }
+        for (A = tab.length - 1 ; A != 0 ; A--) {
+            B = Math.floor(Math.random() * tab.length );
+            TEMPO = tab[B];
+            tab[B] = tab[A];
+            tab[A] = TEMPO ;
+
+        }
+        
+    }
+    else {
+        return 
+    }
+    return tab
+}
+
+
 
 function addParticipant ()
 {
@@ -15,7 +41,7 @@ if ( participantName === '') {
 }
 //je créé un element li qui contient mon prenom
 const participantElt= `
-<li class="participant">${participantName}</li>
+<li class="participant">${participantName} <i class="fas fa-trash delete"></i></li>
 `
 ;
 //je récupère l' element ul qui contient la list des participants
@@ -65,9 +91,13 @@ function GenerateGroups (participants , numberGroups) {
 
 //Apllique une fonction sur chaque elements du tableau 
 const sorted = participants
+/*
     .map((participant) => ({ name : participant, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map((participant) => participant.name)
+*/
+triB(participants)
+
 
     console.log(sorted)
 //Je veux trier un tableau de nom aleatoirement 
@@ -107,7 +137,7 @@ for ( let groupIndex = 0; groupIndex < groupsArr.length ; groupIndex++){
        <ul> `
        ;
     for (var participantIndex = 0 ; participantIndex < groupsArr[groupIndex].length; participantIndex++  ) {
-        groupElt += `<li>${groupsArr[groupIndex] [participantIndex] }</li>` }
+        groupElt += `<li>${groupsArr[groupIndex] [participantIndex] } </li>` }
        groupElt += `
                     </ul>
                 </div>
@@ -117,5 +147,13 @@ for ( let groupIndex = 0; groupIndex < groupsArr.length ; groupIndex++){
 }
 }
 
+let deleteElt = document.getElementById("participantList")
 
+deleteElt.addEventListener("click", e =>  {
+    if (e.target.classList.contains("delete")){
+        e.target.parentNode.remove();
+    }
+}
+     
 
+)
